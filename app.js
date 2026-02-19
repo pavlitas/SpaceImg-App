@@ -7,7 +7,7 @@ const dataDiv = document.querySelector('.data');
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
+    navigator.serviceWorker.register('sw.js')
       .then(reg => console.log('Postino (Service Worker) registrato!', reg))
       .catch(err => console.log('Errore registrazione postino:', err));
   });
