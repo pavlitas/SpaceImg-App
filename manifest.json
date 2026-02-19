@@ -1,0 +1,7 @@
+{
+  "name": "Momyno App Spaziale",
+  "short_name": "SpaceApp",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#0b0d17"
+}

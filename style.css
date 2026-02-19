@@ -1,0 +1,43 @@
+body {
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    background-color: #0b0d17; /* Un blu notte spaziale */
+    color: white;
+}
+
+.container {
+    max-width: 600px;
+    text-align: center;
+    padding: 20px;
+}
+
+#media-container, iframe {
+    width: 100%;
+    border-radius: 8px;
+    display: none; /* Lo nascondiamo finché non è pronto */
+}
+
+#media-container img {
+    width: 100%;
+    margin: 0 auto;
+}
+/* Il loader che gira */
+.loader {
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.nascondiElemento {
+    display: none;
+}
