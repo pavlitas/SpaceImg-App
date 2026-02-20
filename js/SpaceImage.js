@@ -26,9 +26,6 @@ class SpaceImage {
             <div class="media-container">
                 ${contenutoMedia}
             </div>
-            <a href="${this.url}" target="_blank" class="download-style">
-                Apri immagine HD 🚀
-            </a>
             <h2>${this.titolo}</h2>
             <p class="descrizione">${this.descrizione}</p>
         </div>
