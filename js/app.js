@@ -1,34 +1,25 @@
-// fetch()async 
-const container = document.getElementById("container");
+import {renderSingleView} from './domRender.js';
+import {renderGalleryView} from './domRender.js';
+import { fetchApodData } from './apiService.js';
 
-const service = new NasaService();
+const appDiv = document.getElementById("app");
+const dataDaCalendario = document.getElementById("data");
+const oggi = new Date().toISOString().split('T')[0];
+dataDaCalendario.setAttribute('max', oggi);
 
-async function test() {
-    try {
-        const datiGrezzi = await service.getDailyData();
-        const miaImmagine = new SpaceImage(datiGrezzi);
-        container.innerHTML = miaImmagine.getHtmlTemplate();
-        
-    } catch (err) {
-        console.log("App.js ha ricevuto l'allarme:", err.message);
-        if(err.message.includes("429")) {
-            container.innerHTML = "<h3>Troppe richieste! La NASA ci ha detto di calmarci. 🛑</h3>";
-        } else {
-            container.innerHTML = "<h3>Si è verificato un errore generico. 🛰️</h3>";
+// test 1
+renderSingleView(appDiv);
 
-        }
-    }
-}
+// test 2
+//fetchApodData({ date: '2026-04-07' }).then(data => console.log(data));
 
-test();
+// test 3
+//fetchApodData({ startDate: '2026-04-01', endDate: '2026-04-07' }).then(data => console.log('Range data:', data));
 
+//renderGalleryView(appDiv, { startDate: '2026-03-01', endDate: '2026-03-31' })
 
-/* Service Worker ---------------------------------------------------------------------------- */
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js')
-      .then(reg => console.log('Postino (Service Worker) registrato!', reg))
-      .catch(err => console.log('Errore registrazione postino:', err));
-  });
-}
-
+dataDaCalendario.addEventListener('input', function() {
+    //const valore = this.value; // Formato: YYYY-MM-DD
+    
+    renderSingleView(appDiv, {date: this.value});
+});
