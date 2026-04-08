@@ -5,10 +5,13 @@ import { fetchApodData } from './apiService.js';
 const appDiv = document.getElementById("app");
 const dataDaCalendario = document.getElementById("data");
 const oggi = new Date().toISOString().split('T')[0];
+
 dataDaCalendario.setAttribute('max', oggi);
 
 // test 1
-renderSingleView(appDiv);
+renderSingleView(appDiv, {date: "2026-04-07"});
+
+
 
 // test 2
 //fetchApodData({ date: '2026-04-07' }).then(data => console.log(data));

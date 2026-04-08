@@ -2,6 +2,7 @@
 
 import {fetchApodData} from './apiService.js';
 import { extractYouTubeId } from './utils.js';
+import {renderMediaElement} from './utils.js';
 
 
 export async function renderSingleView(appDiv, params) {
@@ -13,36 +14,37 @@ export async function renderSingleView(appDiv, params) {
         
 
         let html = "";
-        let mediaElement = "";
+        let mediaElement = renderMediaElement(media_type, url, hdurl, title);
 
-        if(media_type === "image") {
-            mediaElement = `<img src="${hdurl}" class="spaceImage" alt="${title}" />`;
-
-        } else if(media_type === "video") {
-            mediaElement = `
-                <video controls width="100%">
-                    <source src="${url}" type="video/mp4" />
-                </video>
-            `;
-
-            /*
-            const videoId = extractYouTubeId(url);
-
-            if (!videoId) {
-                mediaElement = `<p>Errore: impossibile caricare il video</p>`;
-            } else {
-                const embedUrl = `https://www.youtube.com/embed/${videoId}`;
-                mediaElement = `<iframe class="spaceVideo" title="${title}" src="${embedUrl}" width="800px" height="500px"></iframe>`;
-            }
-            */
-        }
+        
 
         html = `
-                <div class="dailyImage">
+            <div class="dailyImage">
+                <div class="media-frame">
+                    <div class="corner-top-left"></div>
+                    <div class="corner-top-right"></div>
+                    
                     ${mediaElement}
-                    <h2>${title}</h2>
-                    <p>${explanation}</p>
+                    
+                    <div class="scanline"></div>
+                    <div class="corner-bottom-left"></div>
+                    <div class="corner-bottom-right"></div>
                 </div>
+
+                <div class="description-box">
+                    <div class="text-header">
+                        <span class="decor-line"></span>
+                        <h2>${title}</h2>
+                    </div>
+                    <div class="text-body">
+                        <p>${explanation}</p>
+                    </div>
+                    <div class="text-footer">
+                        <span class="corner-bracket-bl"></span>
+                        <span class="corner-bracket-br"></span>
+                    </div>
+                </div>
+            </div>
         `;
 
         appDiv.innerHTML = html;
