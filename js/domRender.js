@@ -12,14 +12,13 @@ export async function renderSingleView(appDiv, params) {
         if (!data) return;
         const {date, explanation, hdurl, media_type, title, url} = data;
         
-
-        let html = "";
         let mediaElement = renderMediaElement(media_type, url, hdurl, title);
 
         
 
-        html = `
+        appDiv.innerHTML = `
             <div class="dailyImage">
+            
                 <div class="media-frame">
                     <div class="corner-top-left"></div>
                     <div class="corner-top-right"></div>
@@ -30,14 +29,19 @@ export async function renderSingleView(appDiv, params) {
                     <div class="corner-bottom-left"></div>
                     <div class="corner-bottom-right"></div>
                 </div>
+                
+                <div class="language-selector">
+                    <button id="btn-it" class="lang-btn active">EN</button>
+                    <button id="btn-en" class="lang-btn">IT</button>
+                </div>
 
                 <div class="description-box">
                     <div class="text-header">
                         <span class="decor-line"></span>
-                        <h2>${title}</h2>
+                        <h2 class="apod-title">${title}</h2>
                     </div>
                     <div class="text-body">
-                        <p>${explanation}</p>
+                        <p class="apod-explanation">${explanation}</p>
                     </div>
                     <div class="text-footer">
                         <span class="corner-bracket-bl"></span>
@@ -46,8 +50,27 @@ export async function renderSingleView(appDiv, params) {
                 </div>
             </div>
         `;
+        // --- LOGICA DI CAMBIO LINGUA ---
+        const titleEl = appDiv.querySelector('.apod-title');
+        const descEl = appDiv.querySelector('.apod-explanation');
+        const btnIt = appDiv.querySelector('#btn-it');
+        const btnEn = appDiv.querySelector('#btn-en');
 
-        appDiv.innerHTML = html;
+        const updateText = (lang) => {
+            // Se la traduzione esiste usiamo quella, altrimenti torniamo all'originale
+            const content = data.translations ? data.translations[lang] : { title: data.title, explanation: data.explanation };
+            console.log(content)
+            titleEl.innerText = content.title;
+            descEl.innerText = content.explanation;
+
+            // Gestione estetica tasti (opzionale)
+            btnIt.classList.toggle('active', lang === 'it');
+            btnEn.classList.toggle('active', lang === 'en');
+        };
+
+        btnIt.onclick = () => updateText('it');
+        btnEn.onclick = () => updateText('en');
+
     } catch(error) {
         appDiv.innerHTML = `<p>Errore: impossibile caricare i dati (${error.message})</p>`;
 

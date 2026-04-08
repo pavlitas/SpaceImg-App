@@ -32,7 +32,7 @@ body {
     max-width: 800px;
     width: 100%;
     padding: 0;
-    margin: 20px auto;
+    margin: 0 auto;
     text-align: center;
     box-sizing: border-box; /* Scelta consigliata per i layout */
     color: #fff;
@@ -135,38 +135,54 @@ label {
     text-align: center;
 }
 /* Contenitore e stile base dell'input */
+/* Sovrascriviamo lo stile del calendario per coerenza HUD */
 input[type="date"] {
-  background-color: #000;
-  padding: 12px;
-  color: #ffffff;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 16px;
-  border: none;
-  outline: none;
-  border-radius: 8px;
-  cursor: pointer;
+    background: rgba(93, 242, 255, 0.05);
+    border: 1px solid rgba(93, 242, 255, 0.3);
+    color: var(--neon-cyan);
+    padding: 10px 15px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    
+    /* Forma angolare coerente con i tasti lingua */
+    clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%);
+    
+    /* Per evitare che il bordo venga tagliato dal clip-path, aggiungiamo un po' di margine */
+    margin: 10px 0;
 }
 
-/* Personalizzazione dell'icona del calendario (Webkit: Chrome, Safari, Edge) */
+/* Effetto al passaggio del mouse e focus */
+input[type="date"]:hover, 
+input[type="date"]:focus {
+    background: rgba(93, 242, 255, 0.15);
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 15px rgba(93, 242, 255, 0.3);
+}
+
+/* Personalizzazione dell'icona del calendario */
 input[type="date"]::-webkit-calendar-picker-indicator {
-  background-color: #ffffff;
-  padding: 5px;
-  cursor: pointer;
-  border-radius: 3px;
-  /* Puoi invertire il colore dell'icona se necessario */
-  filter: invert(0); 
+    /* Rendiamo l'icona celeste neon */
+    filter: invert(74%) sepia(59%) saturate(1637%) hue-rotate(151deg) brightness(101%) contrast(101%);
+    cursor: pointer;
+    opacity: 0.8;
+    transition: 0.3s;
 }
 
-/* Effetto al passaggio del mouse */
-input[type="date"]:hover {
-  background-color: #0056b3;
-  transition: 0.3s;
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+    opacity: 1;
+    transform: scale(1.1);
 }
 
-/* Rimuove le freccette predefinite in alcuni browser */
-input[type="date"]::-webkit-inner-spin-button,
-input[type="date"]::-webkit-clear-button {
-  display: none;
+/* Stile per la label del calendario */
+.calendario label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.8rem;
+    color: rgba(93, 242, 255, 0.7);
+    text-shadow: 0 0 5px rgba(93, 242, 255, 0.5);
 }
 
 /* ----------------------------------------------------------------------------------*/
@@ -297,4 +313,66 @@ p {
     border-left: 1px solid rgba(93, 242, 255, 0.1);
     border-right: 1px solid rgba(93, 242, 255, 0.1);
     background: linear-gradient(90deg, rgba(93,242,255,0.02) 0%, transparent 15%, transparent 85%, rgba(93,242,255,0.02) 100%);
+}
+
+/* Container dei tasti */
+.language-selector {
+    display: flex;
+    justify-content: flex-end; /* Li allinea a destra sopra la foto */
+    gap: 10px;
+    margin-bottom: 15px;
+    font-family: 'Orbitron', sans-serif;
+}
+
+/* Stile base dei tasti lingua */
+.lang-btn {
+    background: rgba(93, 242, 255, 0.05);
+    border: 1px solid rgba(93, 242, 255, 0.3);
+    color: var(--neon-cyan);
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%); /* Forma a trapezio cyberpunk */
+}
+
+/* Effetto Hover */
+.lang-btn:hover {
+    background: rgba(93, 242, 255, 0.15);
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 10px rgba(93, 242, 255, 0.2);
+}
+
+/* Stato Attivo (Lingua selezionata) */
+.lang-btn.active {
+    background: var(--neon-cyan);
+    color: #0b1a21; /* Sfondo scuro per contrasto */
+    font-weight: bold;
+    box-shadow: 0 0 15px var(--neon-cyan);
+    border-color: var(--neon-cyan);
+}
+
+/* Piccola decorazione sotto i tasti (opzionale) */
+.lang-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transition: 0.5s;
+}
+
+.lang-btn:hover::before {
+    left: 100%;
 }

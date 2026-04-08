@@ -16,15 +16,22 @@ export async function fetchApodData(params = {}) {
         
         if(apodData) {
             let msg = [{message: apodData.title}, {message: apodData.explanation}];
-            let data = apodData;
+            
             try {
-                const response = await fetch('https://spaceimg-app-backend.onrender.com/translate', {method: "POST", headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(msg) } );
+                const response = await fetch('https://spaceimg-app-backend.onrender.com/translate', {
+                    method: "POST", 
+                    headers: { 'Content-Type': 'application/json' }, 
+                    body: JSON.stringify(msg) 
+                });
+
                 const translationData = await response.json();
 
-                data.title = translationData.translated[0];
-                data.explanation = translationData.translated[1];
+                apodData.translations = {
+                    en: { title: apodData.title, explanation: apodData.explanation },
+                    it: { title: translationData.translated[0], explanation: translationData.translated[1] }
+                };
 
-                return data;
+                return apodData;
 
             } catch(error) {
                 console.log(error);
